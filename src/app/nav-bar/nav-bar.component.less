@@ -1,12 +1,30 @@
 app-nav-bar {
-  display: inline-flex;
   background-color: hsl(136, 90%, 85%);
 
   .nav-container {
     display: flex;
     flex-direction: column;
 
-    app-nav-item {
+    > .sub-menu-header {
+      cursor: pointer;
+      padding: 0.5rem 1rem;
+    }
+
+    > .sub-menu-items {
+      // TODO: How do we make it look hierarchical while also keeping the entire row clickable?
+    }
+  }
+  app-nav-item {
+    display: block;
+    > a {
+      display: block;
+      padding: 0.5rem 1rem;
+      background-color: hsl(136, 90%, 75%);
+      cursor: pointer;
+      &.active {
+        font-weight: bold;
+        font-style: italic;
+      }
     }
   }
 }

@@ -1,8 +1,16 @@
 <div class="nav-container">
-  <div class="sub-menu-header" (click)="open.set(!open())">
+  <div
+    class="sub-menu-header"
+    (click)="open.set(!open())"
+    routerLinkActive="active"
+  >
     <span *ngIf="!open()">👉</span>
     <span *ngIf="open()">👇</span>
     {{ headerTextSignal() }}
   </div>
-  <ng-content *ngIf="open()" select="app-nav-item"></ng-content>
+  <div class="sub-menu-items" [hidden]="!open()">
+    <ng-content
+      select="app-nav-item,app-nav-sub-menu"
+    ></ng-content>
+  </div>
 </div>
