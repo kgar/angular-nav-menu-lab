@@ -10,6 +10,7 @@ import { ViewAComponent } from './view-a/view-a.component';
 import { ViewBComponent } from './view-b/view-b.component';
 import { ViewCComponent } from './view-c/view-c.component';
 import { ViewDComponent } from './view-d/view-d.component';
+import { ViewEComponent } from './view-e/view-e.component';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { ViewDComponent } from './view-d/view-d.component';
     ViewAComponent,
     ViewBComponent,
     ViewCComponent,
-    ViewDComponent
+    ViewDComponent,
+    ViewEComponent
   ],
   imports: [
     BrowserModule,
