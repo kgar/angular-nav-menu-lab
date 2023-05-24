@@ -8,9 +8,10 @@
     <span *ngIf="open()">👇</span>
     {{ headerTextSignal() }}
   </div>
-  <div class="sub-menu-items" [hidden]="!open()">
-    <ng-content
-      select="app-nav-item,app-nav-sub-menu"
-    ></ng-content>
+  <div
+    class="sub-menu-items"
+    [hidden]="!open()"
+  >
+    <ng-content select="app-nav-item,app-nav-sub-menu"></ng-content>
   </div>
 </div>

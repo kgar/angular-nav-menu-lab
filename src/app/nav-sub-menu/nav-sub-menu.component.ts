@@ -1,43 +1,51 @@
 import {
-  AfterContentChecked,
-  AfterContentInit,
-  AfterViewChecked,
   AfterViewInit,
   Component,
   ContentChildren,
   Input,
+  OnDestroy,
   QueryList,
-  ViewChildren,
   signal,
 } from '@angular/core';
-import { RouterLinkActive } from '@angular/router';
 import { NavItemComponent } from '../nav-item/nav-item.component';
+import { Subscription, filter, from, mergeMap } from 'rxjs';
 
 @Component({
   selector: 'app-nav-sub-menu',
   templateUrl: './nav-sub-menu.component.html',
   styleUrls: ['./nav-sub-menu.component.less'],
 })
-export class NavSubMenuComponent implements AfterViewInit, AfterViewChecked {
+export class NavSubMenuComponent implements AfterViewInit, OnDestroy {
   open = signal<boolean>(false);
+
   headerTextSignal = signal<string>('');
   @Input() set headerText(value: string) {
     this.headerTextSignal.set(value);
   }
+
   @ContentChildren(NavItemComponent)
   navItemContentChildren?: QueryList<NavItemComponent>;
 
+  toDestroy = new Subscription();
+
   ngAfterViewInit(): void {
-    // TODO: Is this unavoidable? Is there a better way to do this?
-    setTimeout(() => {
-      for (let directive of this.navItemContentChildren ?? []) {
-        if (directive.isActive()) {
-          this.open.set(true);
-          break;
-        }
-      }
-    });
+    const navListItems = this.navItemContentChildren?.toArray();
+
+    if (navListItems) {
+      this.toDestroy.add(
+        from(navListItems)
+          .pipe(
+            mergeMap((item) => item.activeChange),
+            filter((isActive) => isActive)
+          )
+          .subscribe(() => {
+            setTimeout(() => this.open.set(true));
+          })
+      );
+    }
   }
 
-  ngAfterViewChecked(): void {}
+  ngOnDestroy(): void {
+    this.toDestroy.unsubscribe();
+  }
 }

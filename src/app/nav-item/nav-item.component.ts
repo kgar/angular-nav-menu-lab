@@ -1,4 +1,4 @@
-import { Component, Input, signal } from '@angular/core';
+import { Component, EventEmitter, Input, signal } from '@angular/core';
 
 export type RouterLinkCommands = any[] | string | null | undefined;
 
@@ -9,7 +9,7 @@ export type RouterLinkCommands = any[] | string | null | undefined;
     <a
       [routerLink]="routerLinkSignal()"
       routerLinkActive="active"
-      (isActiveChange)="isActive.set($event)"
+      (isActiveChange)="activeChange.emit($event)"
     >
       <ng-content></ng-content>
     </a>
@@ -18,6 +18,7 @@ export type RouterLinkCommands = any[] | string | null | undefined;
 export class NavItemComponent {
   routerLinkSignal = signal<RouterLinkCommands>(null);
   isActive = signal<boolean>(false);
+  activeChange = new EventEmitter<boolean>();
   @Input() set routerLink(commands: RouterLinkCommands) {
     this.routerLinkSignal.set(commands);
   }
