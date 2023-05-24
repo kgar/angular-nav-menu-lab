@@ -1,0 +1,24 @@
+:host {
+  display: grid;
+
+  grid-template-areas:
+    "header header header"
+    "nav    main   main";
+  grid-template-columns: 20rem 1fr 1fr;
+  grid-template-rows: 3rem 1fr;
+  height: 100%;
+
+  app-nav-bar {
+    grid-area: nav;
+  }
+
+  header {
+    background-color: hsl(240, 76%, 69%);
+    grid-area: header;
+  }
+
+  main {
+    background-color: hsl(0, 64%, 61%);
+    grid-area: main;
+  }
+}

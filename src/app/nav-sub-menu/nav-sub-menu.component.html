@@ -1,0 +1,8 @@
+<div class="nav-container">
+  <div class="sub-menu-header" (click)="open.set(!open())">
+    <span *ngIf="!open()">👉</span>
+    <span *ngIf="open()">👇</span>
+    {{ headerTextSignal() }}
+  </div>
+  <ng-content *ngIf="open()" select="app-nav-item"></ng-content>
+</div>
